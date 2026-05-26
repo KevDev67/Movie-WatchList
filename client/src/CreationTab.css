@@ -1,0 +1,92 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: #d92243;
+  border-bottom: 1px solid black;
+  z-index: 1;
+}
+
+.left-side-container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex: 1;
+}
+
+.glasses-icon {
+  height: 32px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 20px;
+  color: #fff5e5;
+  font-family: Sour Gummy;
+  font-weight: bold;
+}
+
+.creation-container {
+  margin-top: 90px;
+  height: 100vh;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.file-drop-img {
+  height: 150px;
+  margin-top: 15px;
+}
+
+.left-side {
+  display: flex;
+}
+
+.right-side {
+  background-color: red;
+}
+
+.file-drop-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  height: 350px;
+  background-color: #d92243;
+  border: 4px dashed #f69d39;
+  border-radius: 15px;
+}
+
+.title2,
+.title3 {
+  font-family: Sour Gummy;
+  margin: 0;
+  padding: 0;
+  color: #fff5e5;
+  font-weight: bold;
+  margin-bottom: 13px;
+  font-size: 20px;
+}
+
+.upload-file {
+  padding: 7px 9px;
+  font-family: Sour Gummy;
+  border: none;
+  color: #fff5e5;
+  font-weight: bold;
+  background-color: #f69d39;
+  border-radius: 5px;
+  transition:
+    box-shadow 0.125s,
+    opacity 0.125s;
+  font-size: 20px;
+  cursor: pointer;
+}
