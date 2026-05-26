@@ -1,0 +1,78 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: #d92243;
+}
+
+.left-side-container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex: 1;
+}
+
+.glasses-icon {
+  height: 32px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 20px;
+  color: #fff5e5;
+  font-family: Sour Gummy;
+  font-weight: bold;
+}
+
+.middle-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-side-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: right;
+  margin-right: 15px;
+}
+
+.search-input {
+  padding: 6px 8px;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 1rem;
+  background: #e8e8e8;
+  margin-right: 10px;
+  width: 195px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: 3px solid #e0c375;
+}
+
+.add-button {
+  padding: 5px 7px;
+  border: none;
+  color: #fff5e5;
+  font-weight: bold;
+  background-color: #f69d39;
+  border-radius: 5px;
+  transition:
+    box-shadow 0.125s,
+    opacity 0.125s;
+  font-size: 13px;
+}
+
+.add-button:active {
+  box-shadow: 0px 2px 4px black;
+  opacity: 0.5;
+}
