@@ -5,14 +5,15 @@ import { useState, type ChangeEvent } from "react";
 
 function CreationTab() {
   const [image, setImage] = useState<string>("");
+  const [bool, setBool] = useState<boolean>(false);
 
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-
       setImage(imageUrl);
+      setBool(true);
     }
   }
 
@@ -24,6 +25,7 @@ function CreationTab() {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setImage(imageUrl);
+      setBool(true);
     }
   }
 
@@ -45,20 +47,42 @@ function CreationTab() {
             }}
             onDrop={handleDrop}
           >
-            <div>
-              <img className="file-drop-img" src={fileDrop} />
-            </div>
-            <p className="title2">Drag Movie Cover</p>
-            <p className="title3">----OR----</p>
-            <label className="upload-file">
-              Browse Files
-              <input type="file" hidden onChange={handleFileChange} />
-            </label>
+            {bool && (
+              <button
+                onClick={() => {
+                  setBool(false);
+                  setImage("");
+                }}
+                className="x-button"
+              >
+                x
+              </button>
+            )}
+            {bool ? (
+              <>
+                <div className="movie-cover-container">
+                  <img className="movie-poster-img" src={image} />
+                </div>
+                <p className="title4">Click on the x to change cover</p>
+              </>
+            ) : (
+              <>
+                <div>
+                  <img className="file-drop-img" src={fileDrop} />
+                </div>
+
+                <p className="title2">Drag Movie Cover</p>
+                <p className="title3">----OR----</p>
+                <label className="upload-file">
+                  Browse Files
+                  <input type="file" hidden onChange={handleFileChange} />
+                </label>
+              </>
+            )}
           </div>
         </div>
         <div className="right-side">
           <input placeholder="Movie Title" />
-          {image && <img src={image} />}
         </div>
       </div>
     </div>
