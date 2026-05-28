@@ -2,7 +2,7 @@ import "./CreationTab.css";
 import icon from "./assets/3d-glasses.png";
 import fileDrop from "./assets/fileupload.png";
 import checkImage from "./assets/check.png";
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 
 function CreationTab() {
   const [image, setImage] = useState<string>("");
@@ -12,6 +12,36 @@ function CreationTab() {
   const [movieLength, setMovieLength] = useState<string>("");
   const [rating, setRating] = useState<string>("");
   const [date, setDate] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  async function sendPost() {
+    const form = new FormData();
+
+    if (file) {
+      form.append("image", file);
+    }
+
+    form.append("movieTitle", movieTitle);
+    form.append("movieLength", movieLength);
+
+    if (optionValue === "yes") {
+      form.append("rating", rating);
+      form.append("date", date);
+    }
+
+    const data1 = await fetch("/api/data", {
+      method: "POST",
+      body: form,
+    });
+
+    const response = await data1.json();
+    setData(response);
+  }
 
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -20,6 +50,7 @@ function CreationTab() {
       const imageUrl = URL.createObjectURL(file);
       setImage(imageUrl);
       setBool(true);
+      setFile(file);
     }
   }
 
@@ -32,6 +63,7 @@ function CreationTab() {
       const imageUrl = URL.createObjectURL(file);
       setImage(imageUrl);
       setBool(true);
+      setFile(file);
     }
   }
 
@@ -140,7 +172,7 @@ function CreationTab() {
       </div>
 
       <div className="check-button-container">
-        <button className="check-button">
+        <button onClick={sendPost} className="check-button">
           <img className="check-img" src={checkImage} />
         </button>
       </div>

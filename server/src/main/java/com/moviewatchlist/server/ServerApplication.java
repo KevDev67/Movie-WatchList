@@ -1,13 +1,13 @@
-package com.user.movieWatchList;
+package com.moviewatchlist.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MovieWatchListApplication {
+public class ServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MovieWatchListApplication.class, args);
+		SpringApplication.run(ServerApplication.class, args);
 	}
 
 }
