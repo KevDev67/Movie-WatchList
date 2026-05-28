@@ -34,7 +34,7 @@ function CreationTab() {
       form.append("date", date);
     }
 
-    const data1 = await fetch("/api/data", {
+    const data1 = await fetch("http://localhost:8080/api/data", {
       method: "POST",
       body: form,
     });
