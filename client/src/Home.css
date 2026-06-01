@@ -1,0 +1,13 @@
+.movie-section {
+  height: 100vh;
+  background-color: red;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 250px 250px 250px;
+  column-gap: 50px;
+  row-gap: 20px;
+}
+
+.test {
+  background-color: purple;
+}

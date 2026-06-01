@@ -26,15 +26,6 @@ function Header() {
           </button>
         </div>
       </div>
-
-      <div className="movie-section">
-        <div className="test">movie one</div>
-        <div className="test">movie two</div>
-        <div className="test">movie three</div>
-        <div className="test">movie one</div>
-        <div className="test">movie two</div>
-        <div className="test">movie three</div>
-      </div>
     </div>
   );
 }
