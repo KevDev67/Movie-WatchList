@@ -3,16 +3,19 @@ package com.moviewatchlist.server;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.validation.Valid;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/data")
@@ -30,25 +33,48 @@ public class movieDataController {
   }
 
   @PostMapping
-  public ResponseEntity<Object> insertMovieData(@Valid @RequestBody movieDataEntity mde) {
-    if ((mde.movieTitle.equals("") || mde.movieTitle.isBlank())) {
-      return ResponseEntity.status(400).body(Map.of(
-          "success", false,
-          "message", "Movie Title Is Blank",
-          "data", null));
+  public ResponseEntity<Object> insertMovieData(@RequestParam String movieTitle, @RequestParam String movieLength,
+      @RequestParam(required = false) String rating, @RequestParam(required = false) String date,
+      @RequestParam(required = false) MultipartFile image) {
+
+    if ((movieTitle == null || movieTitle.isBlank()) && (movieLength == null || movieLength.isBlank())) {
+      return ResponseEntity.status(400).body(Map.of("success", false, "message",
+          "Both Movie Title and Length are Empty. Please fill them in", "data", ""));
     }
 
-    if ((mde.movieLength.equals("") || mde.movieLength.isBlank())) {
-      return ResponseEntity.status(400).body(Map.of(
-          "success", false,
-          "message", "Movie Length Is Blank",
-          "data", null));
+    if (movieLength == null || movieLength.isBlank()) {
+      return ResponseEntity.status(400).body(Map.of("success", false, "message", "Movie Length Missing", "data", ""));
     }
 
-    return ResponseEntity.status(201).body(Map.of(
-        "success", true,
-        "message", "Created Successfully",
-        "data", mds.insertDataValues(mde)));
+    if (movieTitle == null || movieTitle.isBlank()) {
+      return ResponseEntity.status(400).body(Map.of("success", false, "message", "Movie Title Missing", "data", ""));
+    }
+
+    movieDataEntity mde = new movieDataEntity();
+
+    mde.movieTitle = movieTitle;
+    mde.movieLength = movieLength;
+    mde.movieRating = rating;
+    mde.date = date;
+
+    if (image != null && !image.isEmpty()) {
+      try {
+        Path uploadsPath = Paths.get("uploads");
+        Files.createDirectories(uploadsPath);
+        String fileName = UUID.randomUUID() + "-" + image.getOriginalFilename();
+        Path filePath = uploadsPath.resolve(fileName);
+        Files.copy(image.getInputStream(), filePath);
+        mde.image = "/uploads/" + fileName;
+      } catch (IOException e) {
+        return ResponseEntity.status(500)
+            .body(Map.of("success", false, "message", "Failed to save image", "data", ""));
+      }
+
+    }
+
+    return ResponseEntity.status(201)
+        .body(Map.of("success", true, "message", "Successful", "data", mds.insertDataValues(mde)));
+
   }
 
 }

@@ -3,6 +3,13 @@ import icon from "./assets/3d-glasses.png";
 import fileDrop from "./assets/fileupload.png";
 import checkImage from "./assets/check.png";
 import { useEffect, useState, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+
+type dataType = {
+  data: object;
+  message: string;
+  success: boolean;
+};
 
 function CreationTab() {
   const [image, setImage] = useState<string>("");
@@ -13,11 +20,17 @@ function CreationTab() {
   const [rating, setRating] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<dataType>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    if (data && data.success === false) {
+      alert(data.message);
+    } else if (data && data.success) {
+      navigate("/");
+    }
+  }, [data, navigate]);
 
   async function sendPost() {
     const form = new FormData();
@@ -34,13 +47,14 @@ function CreationTab() {
       form.append("date", date);
     }
 
-    const data1 = await fetch("http://localhost:8080/api/data", {
+    const response = await fetch("http://localhost:8080/api/data", {
       method: "POST",
       body: form,
     });
 
-    const response = await data1.json();
-    setData(response);
+    const data1 = await response.json();
+
+    setData(data1);
   }
 
   function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
