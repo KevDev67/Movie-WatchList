@@ -3,6 +3,7 @@ package com.moviewatchlist.server;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class movieDataService {
@@ -18,6 +19,10 @@ public class movieDataService {
 
   public movieDataEntity insertDataValues(movieDataEntity mde) {
     return mdr.save(mde);
+  }
+
+  public Optional<movieDataEntity> returnDataById(Long id) {
+    return mdr.findById(id);
   }
 
 }

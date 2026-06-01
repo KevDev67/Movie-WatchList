@@ -3,10 +3,22 @@ import icon from "./assets/3d-glasses.png";
 import fileDrop from "./assets/fileupload.png";
 import checkImage from "./assets/check.png";
 import { useEffect, useState, type ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type dataType = {
   data: object;
+  message: string;
+  success: boolean;
+};
+
+type previousDataType = {
+  data: {
+    id: number;
+    image: string;
+    movieLength: string;
+    movieRating: string;
+    movieTitle: string;
+  };
   message: string;
   success: boolean;
 };
@@ -21,8 +33,12 @@ function CreationTab() {
   const [date, setDate] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [data, setData] = useState<dataType>();
+  const [previousData, setPreviousData] = useState<previousDataType | null>(
+    null,
+  );
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     if (data && data.success === false) {
@@ -31,6 +47,26 @@ function CreationTab() {
       navigate("/");
     }
   }, [data, navigate]);
+
+  useEffect(() => {
+    async function getMovieRequest() {
+      if (id) {
+        const response = await fetch(`http://localhost:8080/api/data/${id}`);
+
+        const dataReturn = await response.json();
+        setPreviousData(dataReturn);
+        setMovieTitle(dataReturn.data.movieTitle);
+        setMovieLength(dataReturn.data.movieLength);
+        setImage(`http://localhost:8080${dataReturn.data.image}`);
+        setBool(true);
+      }
+    }
+    getMovieRequest();
+  }, [id]);
+
+  useEffect(() => {
+    console.log(previousData);
+  }, [previousData]);
 
   async function sendPost() {
     const form = new FormData();
@@ -145,6 +181,7 @@ function CreationTab() {
             }}
             className="general-input"
             placeholder="Movie Title"
+            value={movieTitle}
           />
           <input
             onChange={(e) => {
@@ -152,6 +189,7 @@ function CreationTab() {
             }}
             className="general-input"
             placeholder="Movie Length"
+            value={movieLength}
           />
           <select className="select-element" onChange={getOptionValue}>
             <option value="">Watched Previously?</option>

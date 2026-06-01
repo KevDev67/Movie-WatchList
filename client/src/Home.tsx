@@ -5,7 +5,7 @@ import MovieDataComponent from "./MovieDataComponent.tsx";
 
 type dataType = {
   date: string | null;
-  id: string;
+  id: number;
   image: string;
   movieLength: string;
   movieRating: string | null;
@@ -24,10 +24,6 @@ function Home() {
     fetchMovieData();
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <>
       <Header />
@@ -37,6 +33,7 @@ function Home() {
           return (
             <MovieDataComponent
               key={e.id}
+              id={e.id}
               image={`http://localhost:8080${e.image}`}
               movieTitle={e.movieTitle}
               movieLength={e.movieLength}

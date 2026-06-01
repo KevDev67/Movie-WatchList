@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./MovieDataComponent.css";
 
 type MovieDataProps = {
@@ -6,6 +7,7 @@ type MovieDataProps = {
   movieLength: string;
   movieRating: string | null;
   date: string | null;
+  id: number;
 };
 
 function MovieDataComponent({
@@ -14,13 +16,22 @@ function MovieDataComponent({
   movieLength,
   movieRating,
   date,
+  id,
 }: MovieDataProps) {
+  const navigate = useNavigate();
   let formDate = "";
+
   if (date) {
     formDate = new Date(date).toLocaleDateString();
   }
+
   return (
-    <div className="main-container">
+    <div
+      className="main-container"
+      onClick={() => {
+        navigate(`/create/${id}`);
+      }}
+    >
       <div className="left-side-two">
         <img className="movie-poster" src={image} />
       </div>
