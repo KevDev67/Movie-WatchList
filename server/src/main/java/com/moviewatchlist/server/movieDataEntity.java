@@ -29,6 +29,9 @@ public class movieDataEntity {
   @Column(name = "image")
   public String image;
 
+  @Column(name = "watched_previously")
+  public String watched_previously;
+
   public movieDataEntity() {
   }
 

@@ -18,6 +18,8 @@ type previousDataType = {
     movieLength: string;
     movieRating: string;
     movieTitle: string;
+    watched_previously: string;
+    date: string | null;
   };
   message: string;
   success: boolean;
@@ -58,6 +60,12 @@ function CreationTab() {
         setMovieTitle(dataReturn.data.movieTitle);
         setMovieLength(dataReturn.data.movieLength);
         setImage(`http://localhost:8080${dataReturn.data.image}`);
+
+        if (dataReturn.data.watched_previously === "yes") {
+          setOptionValue(dataReturn.data.watched_previously);
+          setRating(dataReturn.data.movieRating);
+          setDate(dataReturn.data.date);
+        }
         setBool(true);
       }
     }
@@ -77,18 +85,30 @@ function CreationTab() {
 
     form.append("movieTitle", movieTitle);
     form.append("movieLength", movieLength);
+    form.append("watched_previously", optionValue);
 
     if (optionValue === "yes") {
       form.append("rating", rating);
       form.append("date", date);
     }
 
-    const response = await fetch("http://localhost:8080/api/data", {
-      method: "POST",
-      body: form,
-    });
+    let data1;
 
-    const data1 = await response.json();
+    if (id) {
+      const response = await fetch(`http://localhost:8080/api/data/${id}`, {
+        method: "PATCH",
+        body: form,
+      });
+
+      data1 = await response.json();
+    } else {
+      const response = await fetch("http://localhost:8080/api/data", {
+        method: "POST",
+        body: form,
+      });
+
+      data1 = await response.json();
+    }
 
     setData(data1);
   }
@@ -191,7 +211,11 @@ function CreationTab() {
             placeholder="Movie Length"
             value={movieLength}
           />
-          <select className="select-element" onChange={getOptionValue}>
+          <select
+            className="select-element"
+            value={optionValue}
+            onChange={getOptionValue}
+          >
             <option value="">Watched Previously?</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
@@ -205,6 +229,7 @@ function CreationTab() {
                   }}
                   className="general-input"
                   placeholder="Rating"
+                  value={rating}
                 />
                 <p className="title7">/10</p>
               </div>
@@ -216,6 +241,7 @@ function CreationTab() {
                   }}
                   className="general-input2"
                   type="date"
+                  value={date}
                 />
               </div>
             </>

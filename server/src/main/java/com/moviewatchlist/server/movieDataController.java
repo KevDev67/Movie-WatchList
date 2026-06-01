@@ -2,8 +2,10 @@ package com.moviewatchlist.server;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +39,7 @@ public class movieDataController {
   @PostMapping
   public ResponseEntity<Object> insertMovieData(@RequestParam String movieTitle, @RequestParam String movieLength,
       @RequestParam(required = false) String rating, @RequestParam(required = false) String date,
-      @RequestParam(required = false) MultipartFile image) {
+      @RequestParam(required = false) MultipartFile image, @RequestParam(required = false) String watched_previously) {
 
     if ((movieTitle == null || movieTitle.isBlank()) && (movieLength == null || movieLength.isBlank())) {
       return ResponseEntity.status(400).body(Map.of("success", false, "message",
@@ -58,6 +60,7 @@ public class movieDataController {
     mde.movieLength = movieLength;
     mde.movieRating = rating;
     mde.date = date;
+    mde.watched_previously = watched_previously;
 
     if (image != null && !image.isEmpty()) {
       try {
@@ -95,6 +98,34 @@ public class movieDataController {
         "message", "Movie found",
         "data", mde.get()));
 
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<Object> updateMovieData(@PathVariable Long id, @RequestParam String movieTitle,
+      @RequestParam String movieLength,
+      @RequestParam(required = false) String rating, @RequestParam(required = false) String date,
+      @RequestParam(required = false) MultipartFile image, @RequestParam(required = false) String watched_previously) {
+
+    Optional<movieDataEntity> movie = mds.returnDataById(id);
+
+    if (movie.isEmpty()) {
+      return ResponseEntity.status(404).body(Map.of("success", false, "message", "Movie Not Found", "data", "null"));
+    }
+
+    movieDataEntity mde = movie.get();
+
+    mde.movieTitle = movieTitle;
+    mde.movieLength = movieLength;
+    mde.movieRating = rating;
+    mde.date = date;
+    mde.watched_previously = watched_previously;
+
+    movieDataEntity updatedMovie = mds.insertDataValues(mde);
+
+    return ResponseEntity.ok(Map.of(
+        "success", true,
+        "message", "updated data",
+        "data", updatedMovie));
   }
 
 }
