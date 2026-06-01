@@ -1,13 +1,27 @@
 .movie-section {
   height: 100vh;
-  background-color: red;
   display: grid;
   justify-content: center;
-  grid-template-columns: 250px 250px 250px;
+  grid-template-columns: 350px 350px 350px;
+  grid-template-rows: 270px 270px 270px;
   column-gap: 50px;
   row-gap: 20px;
 }
 
+@media (max-width: 1200px) {
+  .movie-section {
+    grid-template-columns: 350px 350px;
+  }
+}
+
+@media (max-width: 800px) {
+  .movie-section {
+    grid-template-columns: 350px;
+    row-gap: 38px;
+  }
+}
+
 .test {
+  border-radius: 5px;
   background-color: purple;
 }

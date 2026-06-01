@@ -1,17 +1,50 @@
 import "./Home.css";
 import Header from "./Header.tsx";
+import { useEffect, useState } from "react";
+import MovieDataComponent from "./MovieDataComponent.tsx";
+
+type dataType = {
+  date: string | null;
+  id: string;
+  image: string;
+  movieLength: string;
+  movieRating: string | null;
+  movieTitle: string;
+};
 function Home() {
+  const [data, setData] = useState<dataType[] | []>([]);
+
+  useEffect(() => {
+    async function fetchMovieData() {
+      const response = await fetch("http://localhost:8080/api/data");
+
+      const getBack = await response.json();
+      setData(getBack);
+    }
+    fetchMovieData();
+  }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <>
       <Header />
 
       <div className="movie-section">
-        <div className="test">movie one</div>
-        <div className="test">movie two</div>
-        <div className="test">movie three</div>
-        <div className="test">movie four</div>
-        <div className="test">movie five</div>
-        <div className="test">movie six</div>
+        {data.map((e) => {
+          return (
+            <MovieDataComponent
+              key={e.id}
+              image={`http://localhost:8080${e.image}`}
+              movieTitle={e.movieTitle}
+              movieLength={e.movieLength}
+              movieRating={e.movieRating}
+              date={e.date}
+            />
+          );
+        })}
       </div>
     </>
   );

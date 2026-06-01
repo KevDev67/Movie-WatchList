@@ -60,6 +60,10 @@
   outline: 3px solid #e0c375;
 }
 
+.search-input::placeholder {
+  color: black;
+}
+
 .add-button {
   padding: 5px 7px;
   border: none;
