@@ -22,7 +22,7 @@ function Home() {
       setData(getBack);
     }
     fetchMovieData();
-  }, []);
+  }, [data]);
 
   return (
     <>

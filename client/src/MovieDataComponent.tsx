@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "./MovieDataComponent.css";
+import closedTrash from "./assets/trash.png";
+import openedTrash from "./assets/open-bin.png";
+import { useState } from "react";
 
 type MovieDataProps = {
   image: string;
@@ -10,6 +13,15 @@ type MovieDataProps = {
   id: number;
 };
 
+async function deleteData(id: number) {
+  const res = await fetch(`http://localhost:8080/api/data/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
 function MovieDataComponent({
   image,
   movieTitle,
@@ -18,6 +30,7 @@ function MovieDataComponent({
   date,
   id,
 }: MovieDataProps) {
+  const [hovered, setHovered] = useState<boolean>(false);
   const navigate = useNavigate();
   let formDate = "";
 
@@ -32,6 +45,27 @@ function MovieDataComponent({
         navigate(`/create/${id}`);
       }}
     >
+      <div>
+        <button
+          onMouseEnter={() => {
+            setHovered(true);
+          }}
+          onMouseLeave={() => {
+            setHovered(false);
+          }}
+          className="delete-button"
+          onClick={(e) => {
+            deleteData(id);
+            e.stopPropagation();
+          }}
+        >
+          <img
+            className="delete-image"
+            src={hovered ? openedTrash : closedTrash}
+          />
+        </button>
+      </div>
+
       <div className="left-side-two">
         <img className="movie-poster" src={image} />
       </div>

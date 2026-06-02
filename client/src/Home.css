@@ -11,6 +11,7 @@
 @media (max-width: 1200px) {
   .movie-section {
     grid-template-columns: 350px 350px;
+    row-gap: 38px;
   }
 }
 
@@ -19,9 +20,4 @@
     grid-template-columns: 350px;
     row-gap: 38px;
   }
-}
-
-.test {
-  border-radius: 5px;
-  background-color: purple;
 }

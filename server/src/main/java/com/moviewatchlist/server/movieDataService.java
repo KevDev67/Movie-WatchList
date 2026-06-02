@@ -25,4 +25,8 @@ public class movieDataService {
     return mdr.findById(id);
   }
 
+  public void deleteMovieById(Long id) {
+    mdr.deleteById(id);
+  }
+
 }

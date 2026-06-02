@@ -10,6 +10,7 @@
   height: 100%;
   width: 100%;
   cursor: pointer;
+  position: relative;
 }
 
 .main-container:hover {
@@ -63,4 +64,21 @@
 
 .date-p {
   white-space: nowrap;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 25px;
+  right: 5px;
+  top: 5px;
+  background-color: transparent;
+  border: none;
+}
+
+.delete-image {
+  height: 100%;
+  width: 100%;
 }
