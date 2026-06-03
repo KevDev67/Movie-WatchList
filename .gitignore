@@ -166,3 +166,13 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+
+client/node_modules/
+client/dist/
+server/target/
+
+.classpath
+.factorypath
+.project
+.settings/
