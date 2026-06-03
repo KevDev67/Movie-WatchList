@@ -6,12 +6,8 @@ covers.
 I know the end goal of everything is not perfect, nor is this a demonstration of peak "engineering". This is my timeline as I continue to get better at programming. Until AI replaces me. 
 
 
-
-
-
 ## Demo
-
-https://github.com/user-attachments/assets/dbf3c394-26e0-45f3-a16d-b3511b6a475e
+https://github.com/user-attachments/assets/07267e59-348f-4ca2-ae66-7d3f2d0bc151
 
 ## Tech Stack
 
