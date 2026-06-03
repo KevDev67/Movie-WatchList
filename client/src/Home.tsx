@@ -11,8 +11,15 @@ type dataType = {
   movieRating: string | null;
   movieTitle: string;
 };
+
+type searchType = {
+  success: boolean;
+  message: string;
+  data: dataType[];
+};
 function Home() {
   const [data, setData] = useState<dataType[] | []>([]);
+  const [search, setSearch] = useState<searchType>();
 
   useEffect(() => {
     async function fetchMovieData() {
@@ -26,10 +33,10 @@ function Home() {
 
   return (
     <>
-      <Header />
+      <Header setSearch={setSearch} />
 
       <div className="movie-section">
-        {data.map((e) => {
+        {(search?.data ?? data).map((e) => {
           return (
             <MovieDataComponent
               key={e.id}

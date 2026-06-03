@@ -148,4 +148,12 @@ public class movieDataController {
 
   }
 
+  @GetMapping("/title")
+  public ResponseEntity<Object> returnQueryByTitle(@RequestParam String movieTitle) {
+
+    return ResponseEntity
+        .ok(Map.of("success", true, "message", "Results Found", "data", mds.returnByMovieTitle(movieTitle)));
+
+  }
+
 }

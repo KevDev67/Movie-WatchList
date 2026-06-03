@@ -29,4 +29,8 @@ public class movieDataService {
     mdr.deleteById(id);
   }
 
+  public List<movieDataEntity> returnByMovieTitle(String movieTitle) {
+    return mdr.findByMovieTitleContainingIgnoreCase(movieTitle);
+  }
+
 }

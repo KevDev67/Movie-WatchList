@@ -14,7 +14,7 @@ type MovieDataProps = {
 };
 
 async function deleteData(id: number) {
-  const res = await fetch(`http://localhost:8080/api/data/${id}`, {
+  await fetch(`http://localhost:8080/api/data/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
