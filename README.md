@@ -1,5 +1,5 @@
 
-# Movie WatchList
+# Movie WishList
 Simple Full Stack movie watchlist app that lets you create, search, update, and delete movies while uploading custom movie 
 covers. 
 
