@@ -132,11 +132,25 @@ public class movieDataController {
   public ResponseEntity<Object> deleteDataById(@PathVariable Long id) {
     Optional<movieDataEntity> mde = mds.returnDataById(id);
 
+    movieDataEntity mde2 = mde.get();
+
     if (mde.isEmpty()) {
       ResponseEntity.status(404).body(Map.of(
           "success", false,
           "message", "Could not find Movie",
           "data", ""));
+    }
+
+    if (mde2.image != null && !mde2.image.isBlank()) {
+      try {
+        Path imagePath = Paths.get(mde2.image.substring(1));
+        Files.deleteIfExists(imagePath);
+      } catch (IOException e) {
+        return ResponseEntity.status(500).body(Map.of(
+            "success", false,
+            "message", "Failed to delete image",
+            "data", ""));
+      }
     }
 
     mds.deleteMovieById(id);
