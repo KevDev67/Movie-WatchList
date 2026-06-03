@@ -1,6 +1,6 @@
 
 # Movie WishList
-Simple Full Stack movie watchlist app that lets you create, search, update, and delete movies while uploading custom movie 
+Simple Full Stack movie wishlist app that lets you create, search, update, and delete movies while uploading custom movie 
 covers. 
 
 I know the end goal of everything is not perfect, nor is this a demonstration of peak "engineering". This is my timeline as I continue to get better at programming. Until AI replaces me. 
