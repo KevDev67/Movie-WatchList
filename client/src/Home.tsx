@@ -24,7 +24,6 @@ function Home() {
   useEffect(() => {
     async function fetchMovieData() {
       const response = await fetch("http://localhost:8080/api/data");
-
       const getBack = await response.json();
       setData(getBack);
     }
